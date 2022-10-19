@@ -20,13 +20,16 @@ public class MemberJpaRepository {
         em.persist(member);
         return member;
     }
+
     public void delete(Member member) {
         em.remove(member);
     }
+
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
     }
+
     public Optional<Member> findById(Long id) {
         Member member = em.find(Member.class, id);
         return Optional.ofNullable(member);
@@ -36,6 +39,7 @@ public class MemberJpaRepository {
         return em.createQuery("select count(m) from Member m", Long.class)
                 .getSingleResult();
     }
+
     public Member find(Long id) {
         return em.find(Member.class, id);
     }
@@ -55,10 +59,18 @@ public class MemberJpaRepository {
                 .getResultList();
     }
 
-    public long totalCount(int age){
-        return em.createQuery("select count(m) from Member m where m.age = :age",Long.class)
-                .setParameter("age",age)
+    public long totalCount(int age) {
+        return em.createQuery("select count(m) from Member m where m.age = :age", Long.class)
+                .setParameter("age", age)
                 .getSingleResult();
+    }
+
+    public int bulkAgePlus(int age) {
+        return em.createQuery("update Member m set m.age = m.age + 1" +
+                        " where m.age >= :age")
+                .setParameter("age",age)
+                .executeUpdate();
+
     }
 
 
