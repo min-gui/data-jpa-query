@@ -22,13 +22,13 @@ public class Member extends BaseEntity {
     private Team team;
 
     public Member(String username) {
-        this.username = username;
+        this(username, 0);
     }
 
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
-        if (team != null){
+        if (team != null) {
             changeTeam(team);
         }
     }
@@ -42,7 +42,7 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public void changeTeam(Team team){
+    public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
     }
